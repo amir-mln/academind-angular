@@ -5,7 +5,11 @@
 </div>
 <hr />
 <div class="row">
-  <div class="col-xs-12" *ngFor="let recipe of recipes">
-    <app-recipe-item [recipe]="recipe"></app-recipe-item>
+  <div class="col-xs-12">
+    <app-recipe-item
+      *ngFor="let rcp of recipes"
+      [recipe]="rcp"
+      (selectItemRecipe)="selectListRecipe.emit($event)"
+    ></app-recipe-item>
   </div>
 </div>
