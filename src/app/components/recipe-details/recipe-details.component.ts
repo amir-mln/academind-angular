@@ -1,11 +1,7 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
 import { Recipe } from 'src/app/models/recipe.model';
+import { RecipeService } from 'src/app/services/recipe.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -14,7 +10,11 @@ import { Recipe } from 'src/app/models/recipe.model';
 })
 export class RecipeDetailsComponent implements OnInit {
   @Input() selectedRecipe!: Recipe;
-  constructor() {}
 
+  constructor(private recipeService: RecipeService) {}
   ngOnInit(): void {}
+  onToShopClick(e: MouseEvent) {
+    e.preventDefault();
+    this.recipeService.addIngredientsToShop(...this.selectedRecipe.ingredients);
+  }
 }

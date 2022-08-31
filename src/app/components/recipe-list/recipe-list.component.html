@@ -9,7 +9,6 @@
     <app-recipe-item
       *ngFor="let rcp of recipes"
       [recipe]="rcp"
-      (selectItemRecipe)="selectListRecipe.emit($event)"
     ></app-recipe-item>
   </div>
 </div>

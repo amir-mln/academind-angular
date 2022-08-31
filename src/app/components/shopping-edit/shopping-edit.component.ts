@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Ingredient } from 'src/app/models/ingredient.model';
+import { ShoppingService } from 'src/app/services/shopping.service';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -16,15 +17,13 @@ import { Ingredient } from 'src/app/models/ingredient.model';
 export class ShoppingEditComponent implements OnInit {
   @ViewChild('nameInputRef', { static: true }) nameInput!: ElementRef;
   @ViewChild('amountInputRef', { static: true }) amountInput!: ElementRef;
-  @Output() onFormSubmit = new EventEmitter<{ name: string; amount: number }>();
 
-  constructor() {}
+  constructor(private shoppingService: ShoppingService) {}
   ngOnInit(): void {}
-
   formSubmitHandler(e: SubmitEvent) {
     e.preventDefault();
     const name = this.nameInput.nativeElement.value;
     const amount = +this.amountInput.nativeElement.value;
-    this.onFormSubmit.emit(new Ingredient(name, amount));
+    this.shoppingService.addItem(new Ingredient(name, amount));
   }
 }
