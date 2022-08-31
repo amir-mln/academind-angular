@@ -6,13 +6,6 @@ import { Component, Output, OnInit, EventEmitter } from '@angular/core';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  @Output() routerHandler = new EventEmitter();
-
-  onLinkClick(e: MouseEvent) {
-    e.preventDefault();
-    console.log((e!.target as HTMLAnchorElement).title);
-    this.routerHandler.emit((e!.target as HTMLAnchorElement).title);
-  }
   constructor() {}
   ngOnInit(): void {}
 }

@@ -7,12 +7,10 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li>
-          <a href="#" (click)="onLinkClick($event)" title="recipe">Recipes</a>
+          <a routerLink="/recipe"> Recipes </a>
         </li>
         <li>
-          <a href="#" (click)="onLinkClick($event)" title="shopping-list"
-            >Shopping List</a
-          >
+          <a routerLink="/shopping-list"> Shopping List </a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -21,8 +19,8 @@
             >Manage <span class="caret"></span
           ></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Save Data</a></li>
-            <li><a href="#">Fetch Data</a></li>
+            <li>Save Data</li>
+            <li>Fetch Data</li>
           </ul>
         </li>
       </ul>

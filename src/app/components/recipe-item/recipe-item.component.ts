@@ -9,6 +9,7 @@ import { RecipeService } from 'src/app/services/recipe.service';
 })
 export class RecipeItemComponent implements OnInit {
   @Input() recipe!: Recipe;
+  @Input() recipeIndex!: number;
 
   constructor(private recipeService: RecipeService) {}
   ngOnInit(): void {}
