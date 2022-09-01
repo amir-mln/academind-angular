@@ -1,6 +1,6 @@
 <a
-  [routerLink]="'' + recipeIndex"
-  (click)="onLinkClick($event)"
+  [routerLink]="recipeIndex + ''"
+  (click)="$event.preventDefault()"
   class="list-group-item clearfix"
 >
   <div class="pull-left">
