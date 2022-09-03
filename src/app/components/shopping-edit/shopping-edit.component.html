@@ -1,26 +1,55 @@
 <div class="row">
   <div class="col-xs-12">
-    <form (submit)="formSubmitHandler($event)">
+    <form (ngSubmit)="formSubmitHandler(editForm)" #editForm="ngForm">
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>
-          <input type="text" id="name" class="form-control" #nameInputRef />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            ngModel
+            required
+          />
         </div>
         <div class="col-sm-2 form-group">
           <label for="amount">Amount</label>
           <input
             type="number"
             id="amount"
+            name="amount"
             class="form-control"
-            #amountInputRef
+            ngModel
+            required
           />
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <button class="btn btn-success" type="submit">Add</button>
-          <button class="btn btn-danger" type="button">Delete</button>
-          <button class="btn btn-primary" type="button">Clear</button>
+          <button
+            class="btn btn-success"
+            type="submit"
+            [disabled]="editForm.invalid"
+          >
+            {{ editMode ? "update" : "add" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            *ngIf="!!editMode"
+            (click)="formDeleteHandler(editForm)"
+          >
+            Delete
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="!editForm.touched"
+            (click)="formResetHandler(editForm)"
+          >
+            Reset
+          </button>
         </div>
       </div>
     </form>

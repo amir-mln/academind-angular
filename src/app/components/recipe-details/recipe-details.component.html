@@ -15,13 +15,15 @@
         Manage Recipe <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
-        <li (click)="onToShopClick($event)" style="cursor: pointer">
+        <li style="cursor: pointer" (click)="onToShopClick($event)">
           To Shopping List
         </li>
         <li style="cursor: pointer" (click)="onEditClick($event)">
           Edit Recipe
         </li>
-        <li>Delete Recipe</li>
+        <li style="cursor: pointer" (click)="onDeleteClick($event)">
+          Delete Recipe
+        </li>
       </ul>
     </div>
   </div>
