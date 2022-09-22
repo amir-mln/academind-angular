@@ -10,6 +10,10 @@ export class ShoppingService {
   get ingredients() {
     return Array.from(this.list);
   }
+  setItems(...ingredients: Ingredient[]) {
+    this.list = ingredients;
+    this.onNewIngredient.next(this.ingredients);
+  }
   addItem(...ingredients: Ingredient[]) {
     this.list.push(...ingredients);
     this.onNewIngredient.next(this.ingredients);

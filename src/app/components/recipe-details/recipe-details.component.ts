@@ -11,16 +11,19 @@ import { RecipeService } from 'src/app/services/recipe.service';
 })
 export class RecipeDetailsComponent implements OnInit {
   selectedRecipe!: Recipe;
-  recipeIndex!: number;
+  recipeId!: number;
+
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.route.params.subscribe(({ id: index }) => {
-      this.selectedRecipe = this.recipeService.recipes[index];
-      this.recipeIndex = index;
+    this.route.params.subscribe(({ id: routeId }) => {
+      this.selectedRecipe = this.recipeService.recipes.find(
+        ({ id }) => id === +routeId
+      )!;
+      this.recipeId = +routeId;
     });
   }
   onToShopClick(e: MouseEvent) {
@@ -33,7 +36,7 @@ export class RecipeDetailsComponent implements OnInit {
   }
   onDeleteClick(e: MouseEvent) {
     e.preventDefault();
-    this.recipeService.deleteRecipe(this.recipeIndex);
+    this.recipeService.deleteRecipe(this.recipeId);
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

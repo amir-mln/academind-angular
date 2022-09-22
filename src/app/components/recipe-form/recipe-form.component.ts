@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Ingredient } from 'src/app/models/ingredient.model';
 import { ThisReceiver } from '@angular/compiler';
+import { SupabaseService } from 'src/app/services/supabase.service';
 
 @Component({
   selector: 'app-recipe-form',
@@ -13,16 +14,17 @@ import { ThisReceiver } from '@angular/compiler';
 export class RecipeFormComponent implements OnInit {
   recipeForm!: FormGroup;
   editMode!: boolean;
-  recipeIndex!: number;
+  recipeId!: number;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private supabaseService: SupabaseService
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.recipeIndex = params['id'] || -1;
+      this.recipeId = params['id'] || -1;
       this.editMode = !!params['id'];
       this.initForm();
     });
@@ -39,7 +41,10 @@ export class RecipeFormComponent implements OnInit {
     let ingredients = [];
 
     if (this.editMode) {
-      const recipe = this.recipeService.recipes[this.recipeIndex];
+      const recipe = this.recipeService.recipes.find(
+        ({ id }) => id === +this.recipeId
+      )!;
+
       ({ name: name, imagePath: imagePath, description: description } = recipe);
 
       for (let { name, amount } of recipe.ingredients)
@@ -61,11 +66,18 @@ export class RecipeFormComponent implements OnInit {
 
   formSubmitHandler() {
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.recipeIndex, this.recipeForm.value);
+      const editedRecipe = Object.assign(
+        {},
+        { id: this.recipeId },
+        this.recipeForm.value
+      );
+      this.supabaseService
+        .updateRecipe(editedRecipe)
+        .subscribe(this.formCancelHandler);
+      // this.recipeService.updateRecipe(this.recipeId, this.recipeForm.value);
     } else {
-      this.recipeService.addRecipe(this.recipeForm.value);
+      this.recipeService.addRecipes(this.recipeForm.value);
     }
-    this.formCancelHandler();
   }
 
   formCancelHandler() {
